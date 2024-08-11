@@ -55,7 +55,7 @@ export function Navbar({ title, toggleSidebar }: NavbarProps) {
                 <>
                   <div className="mr-2">
                     <Image
-                      src="logo192.png"
+                      src="/logo192.png"
                       alt="logo"
                       width={32}
                       height={32}

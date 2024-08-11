@@ -1,0 +1,38 @@
+{
+  "alice": {
+    "id": "alice",
+    "displayName": "Alice",
+    "shortDescription": "An original, generic character. Generally, she wants to exchange a message or cryptographic key with Bob.",
+    "description": "An original, generic character. Generally, she wants to exchange a message or cryptographic key with Bob."
+  },
+  "bob": {
+    "id": "bob",
+    "displayName": "Bob",
+    "shortDescription": "An original, generic character. Generally, he wants to exchange a message or cryptographic key with Alice.",
+    "description": "An original, generic character. Generally, he wants to exchange a message or cryptographic key with Alice."
+  },
+  "charlie": {
+    "id": "charlie",
+    "displayName": "Charlie",
+    "shortDescription": "A generic third participant.",
+    "description": "A generic third participant."
+  },
+  "dave": {
+    "id": "dave",
+    "displayName": "Dave",
+    "shortDescription": "A generic fourth participant.",
+    "description": "A generic fourth participant."
+  },
+  "eve": {
+    "id": "eve",
+    "displayName": "Eve",
+    "shortDescription": "An eavesdropper, who is usually a passive attacker.",
+    "description": "An eavesdropper, who is usually a passive attacker. While they can listen in on messages between Alice and Bob, they cannot modify them."
+  },
+  "frank": {
+    "id": "frank",
+    "displayName": "Frank",
+    "shortDescription": "A generic sixth participant.",
+    "description": "A generic sixth participant."
+  }
+}
