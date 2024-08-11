@@ -13,6 +13,14 @@ export default function Page() {
       <div className="my-4">
         <ul>
           <li>
+            <a
+              className="link link-hover"
+              href="https://en.wikipedia.org/wiki/Alice_and_Bob#Cast_of_characters"
+            >
+              Wikipedia: Alice and Bob - Cast of Characters
+            </a>
+          </li>
+          <li>
             <a className="link link-hover" href="https://tailwindcss.com/">
               Tailwind CSS
             </a>

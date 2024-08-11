@@ -1,10 +1,7 @@
 'use client'
 
 import { PropsWithChildren, ReactNode } from 'react'
-import {
-  KeyIcon,
-  UserGroupIcon,
-} from '@heroicons/react/24/outline'
+import { KeyIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { Navbar as DaisyNavbar, Button, Menu } from 'react-daisyui'
 import Link from 'next/link'
 import { Url } from 'next/dist/shared/lib/router/router'
