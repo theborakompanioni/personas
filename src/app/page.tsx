@@ -4,7 +4,10 @@ import { useEffect, useState } from 'react'
 import { Button, Hero } from 'react-daisyui'
 import TextTransition, { presets } from 'react-text-transition'
 
-const TEXTS = ['Alice', 'Bob', 'Charlie', 'Dave', 'Eve', 'Frank']
+import PERSONAS from './personas.json'
+import ROUTES from './lib/routes'
+
+const TEXTS = Object.values(PERSONAS).map((it) => it.displayName)
 
 export default function Home() {
   const [index, setIndex] = useState(0)
@@ -33,7 +36,9 @@ export default function Home() {
               context—personal, professional, or creative.
             </p>
 
-            <Button color="primary">Get Started</Button>
+            <Button color="primary" tag="a" href={ROUTES.personas}>
+              Get Started
+            </Button>
           </div>
         </Hero.Content>
       </Hero>

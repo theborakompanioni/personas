@@ -5,7 +5,7 @@ import { Avatar, AvatarProps, Card, Stack } from 'react-daisyui'
 import PERSONAS from '../personas.json'
 import ROUTES from '../lib/routes'
 
-type Persona = {
+export type Persona = {
   id: string
   displayName: string
   shortDescription: string
@@ -27,24 +27,23 @@ function Persona({
 }: PersonaProps) {
   return (
     <>
-      <Stack><Link href={`${ROUTES.personas}/${id}`}>
-        <Card
-          className={`${className} text-center shadow-md bg-${bgColor} text-${bgColor}-content`}
-        >
-          <Card.Body className="items-center">
-            <Avatar
-              shape="circle"
-              border
-              borderColor={avatarBorderColor}
-              src={`https://robohash.org/${id}.png`}
-            />
-            <Card.Title>{displayName}</Card.Title>
-            <p>{shortDescription}</p>
-            <Link className="link link-hover" href={`${ROUTES.personas}/${id}`}>
-              {`${ROUTES.personas}/${id}`}
-            </Link>
-          </Card.Body>
-        </Card></Link>
+      <Stack>
+        <Link href={`${ROUTES.personas}/${id}`}>
+          <Card
+            className={`${className} text-center shadow-md bg-${bgColor} text-${bgColor}-content`}
+          >
+            <Card.Body className="items-center">
+              <Avatar
+                shape="circle"
+                border
+                borderColor={avatarBorderColor}
+                src={`https://robohash.org/${id}.png`}
+              />
+              <Card.Title>{displayName}</Card.Title>
+              <p className="text-sm">{shortDescription}</p>
+            </Card.Body>
+          </Card>
+        </Link>
         <Card
           className={`text-center shadow-md bg-${bgColor} text-${bgColor}-content`}
         >
@@ -74,13 +73,13 @@ export default function Page() {
 
       <div className="my-12 flex flex-wrap justify-center gap-8">
         <Persona
-          className="w-96 min-h-80"
+          className="w-80 min-h-64"
           persona={PERSONAS.alice}
           bgColor="primary"
           avatarBorderColor="secondary"
         />
         <Persona
-          className="w-96 min-h-80"
+          className="w-80 min-h-64"
           persona={PERSONAS.bob}
           bgColor="primary"
           avatarBorderColor="secondary"
@@ -89,22 +88,22 @@ export default function Page() {
 
       <div className="my-4 flex flex-wrap justify-center gap-2">
         <Persona
-          className="w-96 min-h-80"
+          className="w-80 min-h-64"
           persona={PERSONAS.charlie}
           avatarBorderColor="neutral"
         />
         <Persona
-          className="w-96 min-h-80"
+          className="w-80 min-h-64"
           persona={PERSONAS.dave}
           avatarBorderColor="neutral"
         />
         <Persona
-          className="w-96 min-h-80"
+          className="w-80 min-h-64"
           persona={PERSONAS.eve}
           avatarBorderColor="warning"
         />
         <Persona
-          className="w-96 min-h-80"
+          className="w-80 min-h-64"
           persona={PERSONAS.frank}
           avatarBorderColor="neutral"
         />

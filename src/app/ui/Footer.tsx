@@ -13,11 +13,11 @@ export function Footer() {
           <Link className="link link-hover" href={ROUTES.index}>
             Home
           </Link>
-          <Link className="link link-hover" href={ROUTES.identity}>
-            Identity
-          </Link>
           <Link className="link link-hover" href={ROUTES.personas}>
             Personas
+          </Link>
+          <Link className="link link-hover" href={ROUTES.identity}>
+            Identity
           </Link>
         </div>
         <div>

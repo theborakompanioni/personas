@@ -2,13 +2,13 @@
   "alice": {
     "id": "alice",
     "displayName": "Alice",
-    "shortDescription": "An original, generic character. Generally, she wants to exchange a message or cryptographic key with Bob.",
+    "shortDescription": "An original, generic character. Friends with Bob.",
     "description": "An original, generic character. Generally, she wants to exchange a message or cryptographic key with Bob."
   },
   "bob": {
     "id": "bob",
     "displayName": "Bob",
-    "shortDescription": "An original, generic character. Generally, he wants to exchange a message or cryptographic key with Alice.",
+    "shortDescription": "An original, generic character. Friends with Alice.",
     "description": "An original, generic character. Generally, he wants to exchange a message or cryptographic key with Alice."
   },
   "charlie": {
