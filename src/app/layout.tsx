@@ -4,6 +4,7 @@ import { SettingsProvider } from './context/SettingsContext'
 import './globals.css'
 import dynamic from 'next/dynamic'
 import { isDevMode } from './lib/dev'
+import { DEFAULT_THEME } from './app_settings'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
 
 const defaultAppSettings = {
   dev: isDevMode(),
-  theme: 'dark',
+  theme: DEFAULT_THEME,
 }
 
 const DynamicLayout = dynamic(() => import('./ui/Layout'), { ssr: false })

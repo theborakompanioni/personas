@@ -3,38 +3,7 @@
 import { Form, Button, Checkbox, useTheme, Theme } from 'react-daisyui'
 
 import { useSettings, useSettingsDispatch } from '../context/SettingsContext'
-
-const DEFAULT_THEMES: string[] = [
-  'light',
-  'dark',
-  'cupcake',
-  'bumblebee',
-  'emerald',
-  'corporate',
-  'synthwave',
-  'retro',
-  'cyberpunk',
-  'valentine',
-  'halloween',
-  'garden',
-  'forest',
-  'aqua',
-  'lofi',
-  'pastel',
-  'fantasy',
-  'wireframe',
-  'black',
-  'luxury',
-  'dracula',
-  'cmyk',
-  'autumn',
-  'business',
-  'acid',
-  'lemonade',
-  'night',
-  'coffee',
-  'winter',
-]
+import { DEFAULT_THEMES } from '../app_settings'
 
 type ThemeItemProps = {
   dataTheme: string

@@ -6,6 +6,7 @@ import { Sidebar } from './Sidebar'
 import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 import { useSettings } from '../context/SettingsContext'
+import { DEFAULT_THEME } from '../app_settings'
 
 type LayoutProps = {
   title: ReactNode
@@ -22,7 +23,7 @@ export default function Layout({
   const toggleSidebarVisible = () => setSitebarVisible((current) => !current)
 
   return (
-    <Theme dataTheme={theme || 'dark'}>
+    <Theme dataTheme={theme || DEFAULT_THEME}>
       <Drawer
         {...drawer}
         side={<Sidebar title={title} />}
