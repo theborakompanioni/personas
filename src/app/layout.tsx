@@ -8,7 +8,7 @@ import { DEFAULT_THEME } from './app_settings'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const appName = 'personas'
+const appName = 'Personas'
 const appVersion = process.env.REACT_APP_VERSION || '0.1.0-dev'
 
 export const metadata: Metadata = {
