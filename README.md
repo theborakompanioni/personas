@@ -21,3 +21,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ## License
 
 The project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## Resources
+- Alice and Bob - Cast of Characters (Wikipedia): https://en.wikipedia.org/wiki/Alice_and_Bob#Cast_of_characters
+- Tailwind CSS: https://tailwindcss.com
+- Daisy UI Components: https://daisyui.com/components
+- React Daisy UI: https://react.daisyui.com
