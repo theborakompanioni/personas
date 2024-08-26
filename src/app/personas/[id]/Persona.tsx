@@ -64,7 +64,7 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
   )
 
   const [subPersonas, setSubPersonas] = useState<Nip06SubPersona[]>(() => {
-    return Array(8 + 1)
+    return Array(16 + 1)
       .fill('')
       .map((_, index) => {
         const path = nip06DerivationPath(index)
