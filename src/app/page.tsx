@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Button, Hero } from 'react-daisyui'
+import Link from 'next/link'
+import { Hero } from 'react-daisyui'
 import TextTransition, { presets } from 'react-text-transition'
 
 import PERSONAS from './personas.json'
@@ -36,9 +37,9 @@ export default function Home() {
               context—personal, professional, or creative.
             </p>
 
-            <Button color="primary" tag="a" href={ROUTES.personas}>
+            <Link className="btn btn-primary btn-lg hover:no-underline" href={ROUTES.personas}>
               Get Started
-            </Button>
+            </Link>
           </div>
         </Hero.Content>
       </Hero>
