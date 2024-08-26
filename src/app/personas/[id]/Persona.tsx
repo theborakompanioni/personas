@@ -100,45 +100,37 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
         </div>
       </div>
 
-      <div className="flex my-6 bg-neutral rounded-lg p-8">
+      <div className="flex my-4 bg-neutral rounded-lg p-8">
         <div className="text-lg text-neutral-content break-all">
           {'>'} {value.description}
         </div>
       </div>
 
-      <div className="flex my-6 bg-neutral rounded-lg p-8">
-        <div className="text-lg text-neutral-content break-all">
-          <pre>
-            <div>
-              <span className="text-primary">Id:</span> {value.id}
-            </div>
+      <div className="flex flex-col my-4 bg-neutral rounded-lg p-8 text-neutral-content break-all">
+        <div className="flex flex-col gap-2">
+          <label className="input input-bordered input-md flex items-center gap-1">
+            <div className="text-primary min-w-32">
+              <span className="pe-1">Entropy</span>
 
-            <div className="flex items-center">
-              <div>
-                <span className="text-primary">Entropy:</span> {entropyHex}
-              </div>
               <InfoDropdown>
-                <code className="text-info">
+                <code className="text-info w-64">
                   `sha256("{value.id}").slice(0, 16)`
                 </code>
               </InfoDropdown>
             </div>
-            <div>
-              <span className="text-primary">Mnemonic:</span> {mnemonic}
-            </div>
-            <div className="hidden">
-              <br />
-              Seed: {seedHex}
-              <br />
-              xpriv: {masterKey.privateExtendedKey}
-              <br />
-              xpub: {masterKey.publicExtendedKey}
-            </div>
-          </pre>
+            <input className="flex-1" type="text" value={entropyHex} readOnly />
+            <CopyButton value={entropyHex} />
+          </label>
+
+          <label className="input input-bordered input-md flex items-center gap-1">
+            <div className="text-primary min-w-32">Mnemonic</div>
+            <input className="flex-1" type="text" value={mnemonic} readOnly />
+            <CopyButton value={mnemonic} />
+          </label>
         </div>
       </div>
 
-      <div className="mb-2">
+      <div className="my-4">
         <SubPersonaCard
           value={mainPersona}
           className="border-2 border-primary"
@@ -293,7 +285,7 @@ function InfoDropdown({
       <Dropdown hover {...props}>
         <Dropdown.Toggle
           button={false}
-          className="btn btn-circle btn-ghost btn-xs text-info"
+          className="btn btn-circle btn-ghost btn-xs"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
