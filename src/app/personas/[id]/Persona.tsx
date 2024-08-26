@@ -7,6 +7,8 @@ import {
   Card,
   Dropdown,
   DropdownProps,
+  Input,
+  Link,
 } from 'react-daisyui'
 import { HDKey } from '@scure/bip32'
 import { entropyToMnemonic, mnemonicToSeedSync } from '@scure/bip39'
@@ -144,30 +146,80 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
           <div className="text-lg">{value.displayName}</div>
           <div className="flex items-center">
             <Breadcrumbs>
-              {value.path.split('/').map((it) => (
-                <Breadcrumbs.Item>{it}</Breadcrumbs.Item>
+              {value.path.split('/').map((it, index) => (
+                <Breadcrumbs.Item key={index}>{it}</Breadcrumbs.Item>
               ))}
             </Breadcrumbs>
             <InfoDropdown className="ms-2">
-              NIP-06 Derivation path
-              <div className="w-64">
-                <span className="text-primary">path:</span> {value.path}
+              <div>
+                Derivation path (
+                <Link
+                  color="info"
+                  href="https://github.com/nostr-protocol/nips/blob/master/06.md"
+                  target="_blank"
+                >
+                  NIP-06
+                </Link>
+                )
               </div>
+              <label className="input input-bordered input-sm flex items-center gap-1">
+                <div className="text-primary min-w-16">path</div>
+                <input
+                  className="flex-1"
+                  type="text"
+                  value={value.path}
+                  readOnly
+                />
+              </label>
             </InfoDropdown>
           </div>
         </div>
-        <pre>
-          <span className="text-primary">nsec:</span> {value.privateKey.nip19}
-          <br />
-          <span className="text-primary">nsec (hex):</span>{' '}
-          {value.privateKey.hex}
-          <br />
-          <span className="text-primary">npub:</span> {value.publicKey.nip19}
-          <br />
-          <span className="text-primary">npub (hex):</span>{' '}
-          {value.publicKey.hex}
-          <br />
-        </pre>
+        <div className="flex flex-col gap-2">
+          <div>
+            <label className="input input-bordered input-sm flex items-center gap-1">
+              <div className="text-primary min-w-24">nsec</div>
+              <input
+                className="flex-1"
+                type="text"
+                value={value.privateKey.nip19}
+                readOnly
+              />
+            </label>
+          </div>
+          <div>
+            <label className="input input-bordered input-sm flex items-center gap-1">
+              <div className="text-primary min-w-24">nsec (hex)</div>
+              <input
+                className="flex-1"
+                type="text"
+                value={value.privateKey.hex}
+                readOnly
+              />
+            </label>
+          </div>
+          <div>
+            <label className="input input-bordered input-sm flex items-center gap-1">
+              <div className="text-primary min-w-24">npub</div>
+              <input
+                className="flex-1"
+                type="text"
+                value={value.publicKey.nip19}
+                readOnly
+              />
+            </label>
+          </div>
+          <div>
+            <label className="input input-bordered input-sm flex items-center gap-1">
+              <div className="text-primary min-w-24">npub (hex)</div>
+              <input
+                className="flex-1"
+                type="text"
+                value={value.publicKey.hex}
+                readOnly
+              />
+            </label>
+          </div>
+        </div>
       </div>
     </>
   )
