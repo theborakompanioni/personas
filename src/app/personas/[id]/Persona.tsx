@@ -27,6 +27,7 @@ import {
 } from '../../lib/app_nostr'
 import { Persona } from '../page'
 import { DocumentDuplicateIcon, LinkIcon } from '@heroicons/react/24/outline'
+import { ButtonProps } from 'react-daisyui/dist/Button'
 
 type Nip06SubPersona = {
   displayName: Persona['displayName']
@@ -63,19 +64,24 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
   )
 
   const [subPersonas, setSubPersonas] = useState<Nip06SubPersona[]>(() => {
-    return Array(16)
+    return Array(8 + 1)
       .fill('')
       .map((_, index) => {
         const path = nip06DerivationPath(index)
         const key = deriveNostrKeyFromPath(masterKey, path)
         return {
-          displayName: `${value.displayName} ${index}`,
+          displayName: `${value.displayName} #${index}`,
           path,
           privateKey: toNostrPrivateKey(key.privateKey),
           publicKey: toNostrPublicKey(key.publicKey),
         }
       })
   })
+
+  const [mainPersona, otherPersonas] = useMemo(
+    () => [subPersonas[0], subPersonas.slice(1)],
+    [subPersonas],
+  )
 
   return (
     <>
@@ -132,8 +138,15 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2">
-        {subPersonas.map((it, index) => (
+      <div className="mb-2">
+        <SubPersonaCard
+          value={mainPersona}
+          className="border-2 border-primary"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
+        {otherPersonas.map((it, index) => (
           <SubPersonaCard value={it} key={index} />
         ))}
       </div>
@@ -141,10 +154,18 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
   )
 }
 
-function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
+function SubPersonaCard({
+  value,
+  className,
+}: {
+  value: Nip06SubPersona
+  className?: string
+}) {
   return (
     <>
-      <div className="flex-1 bg-neutral rounded-lg p-8 text-sm text-neutral-content break-all">
+      <div
+        className={`flex-1 bg-neutral rounded-lg p-8 text-sm text-neutral-content break-all ${className ?? ''}`}
+      >
         <div className="mb-2">
           <div className="text-lg">{value.displayName}</div>
           <div className="flex items-center">
@@ -180,7 +201,7 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
         <div className="flex flex-col gap-2">
           <div>
             <label className="input input-bordered input-sm flex items-center gap-1">
-              <div className="text-primary min-w-24">nsec</div>
+              <div className="text-primary min-w-20">nsec</div>
               <input
                 className="flex-1"
                 type="text"
@@ -192,7 +213,7 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
           </div>
           <div>
             <label className="input input-bordered input-sm flex items-center gap-1">
-              <div className="text-primary min-w-24">nsec (hex)</div>
+              <div className="text-primary min-w-20">nsec (hex)</div>
               <input
                 className="flex-1"
                 type="text"
@@ -204,7 +225,7 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
           </div>
           <div>
             <label className="input input-bordered input-sm flex items-center gap-1">
-              <div className="text-primary min-w-24">npub</div>
+              <div className="text-primary min-w-20">npub</div>
               <input
                 className="flex-1"
                 type="text"
@@ -216,7 +237,7 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
           </div>
           <div>
             <label className="input input-bordered input-sm flex items-center gap-1">
-              <div className="text-primary min-w-24">npub (hex)</div>
+              <div className="text-primary min-w-20">npub (hex)</div>
               <input
                 className="flex-1"
                 type="text"
@@ -241,14 +262,22 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
   )
 }
 
-function CopyButton({ value }: { value: string }) {
+function CopyButton({
+  value,
+  className,
+  size = 'xs',
+}: {
+  value: string
+  className?: string
+  size?: ButtonProps['size']
+}) {
   const copy = async () => {
     await navigator.clipboard.writeText(value)
   }
 
   return (
     <>
-      <Button size="xs" onClick={copy}>
+      <Button className={className} size={size} onClick={copy}>
         <DocumentDuplicateIcon className="w-4 h-4" />
       </Button>
     </>
