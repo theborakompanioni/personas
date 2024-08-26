@@ -92,15 +92,15 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
       <div className="flex my-6 bg-neutral rounded-lg p-8">
         <div className="text-lg text-neutral-content break-all">
           <pre>
-            Id: {value.id}
+            <span className="text-primary">Id:</span> {value.id}
             <br />
-            Entropy (
+            <span className="text-primary">Entropy:</span> {entropyHex} (
             <code className="text-accent">
               `sha256("{value.id}").slice(0, 16)`
             </code>
-            ): {entropyHex}
+            )
             <br />
-            Mnemonic: {mnemonic}
+            <span className="text-primary">Mnemonic:</span> {mnemonic}
             <div className="hidden">
               <br />
               Seed: {seedHex}
@@ -118,15 +118,17 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
           <div className="flex-1 bg-neutral rounded-lg p-8 text-sm text-neutral-content break-all">
             <div className="text-lg mb-2">{it.displayName}</div>
             <pre>
-              path: {it.path}
+              <span className="text-primary">path:</span> {it.path}
               <br />
-              nsec: {it.privateKey.nip19}
+              <span className="text-primary">nsec:</span> {it.privateKey.nip19}
               <br />
-              nsec (hex): {it.privateKey.hex}
+              <span className="text-primary">nsec (hex):</span>{' '}
+              {it.privateKey.hex}
               <br />
-              npub: {it.publicKey.nip19}
+              <span className="text-primary">npub:</span> {it.publicKey.nip19}
               <br />
-              npub (hex): {it.publicKey.hex}
+              <span className="text-primary">npub (hex):</span>{' '}
+              {it.publicKey.hex}
               <br />
             </pre>
           </div>
