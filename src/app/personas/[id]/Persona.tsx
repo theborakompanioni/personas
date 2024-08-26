@@ -4,10 +4,12 @@ import { PropsWithChildren, useMemo, useState } from 'react'
 import {
   Avatar,
   Breadcrumbs,
+  Button,
   Card,
   Dropdown,
   DropdownProps,
   Input,
+  Join,
   Link,
 } from 'react-daisyui'
 import { HDKey } from '@scure/bip32'
@@ -24,6 +26,7 @@ import {
   toNostrPublicKey,
 } from '../../lib/app_nostr'
 import { Persona } from '../page'
+import { DocumentDuplicateIcon, LinkIcon } from '@heroicons/react/24/outline'
 
 type Nip06SubPersona = {
   displayName: Persona['displayName']
@@ -184,6 +187,7 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
                 value={value.privateKey.nip19}
                 readOnly
               />
+              <CopyButton value={value.privateKey.nip19} />
             </label>
           </div>
           <div>
@@ -195,6 +199,7 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
                 value={value.privateKey.hex}
                 readOnly
               />
+              <CopyButton value={value.privateKey.hex} />
             </label>
           </div>
           <div>
@@ -206,6 +211,7 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
                 value={value.publicKey.nip19}
                 readOnly
               />
+              <CopyButton value={value.publicKey.nip19} />
             </label>
           </div>
           <div>
@@ -217,10 +223,34 @@ function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
                 value={value.publicKey.hex}
                 readOnly
               />
+              <CopyButton value={value.publicKey.hex} />
             </label>
+          </div>
+          <div className="mt-2">
+            <a
+              className="btn btn-sm"
+              target="_blank"
+              href={`https://njump.me/${value.publicKey.nip19}`}
+            >
+              njump <LinkIcon className="w-4 h-4" />
+            </a>
           </div>
         </div>
       </div>
+    </>
+  )
+}
+
+function CopyButton({ value }: { value: string }) {
+  const copy = async () => {
+    await navigator.clipboard.writeText(value)
+  }
+
+  return (
+    <>
+      <Button size="xs" onClick={copy}>
+        <DocumentDuplicateIcon className="w-4 h-4" />
+      </Button>
     </>
   )
 }
