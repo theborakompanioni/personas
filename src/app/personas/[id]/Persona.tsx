@@ -1,7 +1,13 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { Avatar } from 'react-daisyui'
+import { PropsWithChildren, useMemo, useState } from 'react'
+import {
+  Avatar,
+  Breadcrumbs,
+  Card,
+  Dropdown,
+  DropdownProps,
+} from 'react-daisyui'
 import { HDKey } from '@scure/bip32'
 import { entropyToMnemonic, mnemonicToSeedSync } from '@scure/bip39'
 import { wordlist } from '@scure/bip39/wordlists/english'
@@ -92,15 +98,23 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
       <div className="flex my-6 bg-neutral rounded-lg p-8">
         <div className="text-lg text-neutral-content break-all">
           <pre>
-            <span className="text-primary">Id:</span> {value.id}
-            <br />
-            <span className="text-primary">Entropy:</span> {entropyHex} (
-            <code className="text-accent">
-              `sha256("{value.id}").slice(0, 16)`
-            </code>
-            )
-            <br />
-            <span className="text-primary">Mnemonic:</span> {mnemonic}
+            <div>
+              <span className="text-primary">Id:</span> {value.id}
+            </div>
+
+            <div className="flex items-center">
+              <div>
+                <span className="text-primary">Entropy:</span> {entropyHex}
+              </div>
+              <InfoDropdown>
+                <code className="text-info">
+                  `sha256("{value.id}").slice(0, 16)`
+                </code>
+              </InfoDropdown>
+            </div>
+            <div>
+              <span className="text-primary">Mnemonic:</span> {mnemonic}
+            </div>
             <div className="hidden">
               <br />
               Seed: {seedHex}
@@ -113,27 +127,81 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
-        {subPersonas.map((it) => (
-          <div className="flex-1 bg-neutral rounded-lg p-8 text-sm text-neutral-content break-all">
-            <div className="text-lg mb-2">{it.displayName}</div>
-            <pre>
-              <span className="text-primary">path:</span> {it.path}
-              <br />
-              <span className="text-primary">nsec:</span> {it.privateKey.nip19}
-              <br />
-              <span className="text-primary">nsec (hex):</span>{' '}
-              {it.privateKey.hex}
-              <br />
-              <span className="text-primary">npub:</span> {it.publicKey.nip19}
-              <br />
-              <span className="text-primary">npub (hex):</span>{' '}
-              {it.publicKey.hex}
-              <br />
-            </pre>
-          </div>
+      <div className="grid grid-cols-1 2xl:grid-cols-2 gap-2">
+        {subPersonas.map((it, index) => (
+          <SubPersonaCard value={it} key={index} />
         ))}
       </div>
+    </>
+  )
+}
+
+function SubPersonaCard({ value }: { value: Nip06SubPersona }) {
+  return (
+    <>
+      <div className="flex-1 bg-neutral rounded-lg p-8 text-sm text-neutral-content break-all">
+        <div className="mb-2">
+          <div className="text-lg">{value.displayName}</div>
+          <div className="flex items-center">
+            <Breadcrumbs>
+              {value.path.split('/').map((it) => (
+                <Breadcrumbs.Item>{it}</Breadcrumbs.Item>
+              ))}
+            </Breadcrumbs>
+            <InfoDropdown className="ms-2">
+              NIP-06 Derivation path
+              <div className="w-64">
+                <span className="text-primary">path:</span> {value.path}
+              </div>
+            </InfoDropdown>
+          </div>
+        </div>
+        <pre>
+          <span className="text-primary">nsec:</span> {value.privateKey.nip19}
+          <br />
+          <span className="text-primary">nsec (hex):</span>{' '}
+          {value.privateKey.hex}
+          <br />
+          <span className="text-primary">npub:</span> {value.publicKey.nip19}
+          <br />
+          <span className="text-primary">npub (hex):</span>{' '}
+          {value.publicKey.hex}
+          <br />
+        </pre>
+      </div>
+    </>
+  )
+}
+
+function InfoDropdown({
+  children,
+  ...props
+}: PropsWithChildren<Omit<DropdownProps, 'item'>>) {
+  return (
+    <>
+      <Dropdown hover {...props}>
+        <Dropdown.Toggle
+          button={false}
+          className="btn btn-circle btn-ghost btn-xs text-info"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            className="w-4 h-4 stroke-current"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="card compact shadow rounded-box p-2 border border-2 border-info">
+          <Card.Body>{children}</Card.Body>
+        </Dropdown.Menu>
+      </Dropdown>
     </>
   )
 }
