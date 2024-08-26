@@ -52,7 +52,7 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
 
   const nostrKey0 = useMemo(
     () => deriveNostrKeyFromPath(masterKey, nostrKey0Path),
-    [nostrKey0Path],
+    [masterKey, nostrKey0Path],
   )
   const nostrKey0PrivateKey = useMemo(
     () => toNostrPrivateKey(nostrKey0.privateKey),
@@ -114,7 +114,7 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
 
               <InfoDropdown>
                 <code className="text-info w-64">
-                  `sha256("{value.id}").slice(0, 16)`
+                &#96;sha256(&quot;{value.id}&quot;).slice(0, 16)&#96;
                 </code>
               </InfoDropdown>
             </div>
