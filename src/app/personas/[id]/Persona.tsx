@@ -114,7 +114,7 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
 
               <InfoDropdown>
                 <code className="text-info w-64">
-                &#96;sha256(&quot;{value.id}&quot;).slice(0, 16)&#96;
+                  &#96;sha256(&quot;{value.id}&quot;).slice(0, 16)&#96;
                 </code>
               </InfoDropdown>
             </div>

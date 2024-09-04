@@ -37,7 +37,10 @@ export default function Home() {
               context—personal, professional, or creative.
             </p>
 
-            <Link className="btn btn-primary btn-lg hover:no-underline" href={ROUTES.personas}>
+            <Link
+              className="btn btn-primary btn-lg hover:no-underline"
+              href={ROUTES.personas}
+            >
               Get Started
             </Link>
           </div>

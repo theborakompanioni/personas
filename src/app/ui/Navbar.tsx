@@ -72,7 +72,12 @@ export function Navbar({ title, toggleSidebar }: NavbarProps) {
             <Title to={ROUTES.index}>
               <>
                 <div className="mr-2">
-                  <Image src="./logo192.png" alt="logo" width={32} height={32} />
+                  <Image
+                    src="./logo192.png"
+                    alt="logo"
+                    width={32}
+                    height={32}
+                  />
                 </div>
                 {title}
               </>
