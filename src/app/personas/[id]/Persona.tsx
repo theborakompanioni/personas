@@ -1,6 +1,7 @@
 'use client'
 
 import { PropsWithChildren, useMemo, useState } from 'react'
+import { DocumentDuplicateIcon, LinkIcon } from '@heroicons/react/24/outline'
 import {
   Avatar,
   Breadcrumbs,
@@ -10,60 +11,26 @@ import {
   DropdownProps,
   Link,
 } from 'react-daisyui'
-import { HDKey } from '@scure/bip32'
-import { entropyToMnemonic, mnemonicToSeedSync } from '@scure/bip39'
-import { wordlist } from '@scure/bip39/wordlists/english'
-import { sha256 } from '@noble/hashes/sha256'
-import { bytesToHex } from '@noble/hashes/utils'
-import {
-  deriveNostrKeyFromPath,
-  nip06DerivationPath,
-  NostrPrivateKey,
-  NostrPublicKey,
-  toNostrPrivateKey,
-  toNostrPublicKey,
-} from '../../lib/app_nostr'
-import { PersonaData } from '../page'
-import { DocumentDuplicateIcon, LinkIcon } from '@heroicons/react/24/outline'
 import { ButtonProps } from 'react-daisyui/dist/Button'
-
-type Nip06SubPersona = {
-  displayName: PersonaData['displayName']
-  path: string
-  privateKey: NostrPrivateKey
-  publicKey: NostrPublicKey
-}
+import { PersonaData } from '../page'
+import {
+  generateNip06SubIdentity,
+  generatePersona,
+  Nip06SubIdentity,
+} from '../../lib/app_persona'
 
 export default function PersonaPageContent({ value }: { value: PersonaData }) {
-  const idHash = useMemo(() => sha256(value.id), [value.id])
-  const entropy = useMemo(() => idHash.slice(0, 16), [idHash])
-  const entropyHex = useMemo(() => bytesToHex(entropy), [entropy])
-  const mnemonic = useMemo(
-    () => entropyToMnemonic(entropy, wordlist),
-    [entropy],
-  )
-  const seed = useMemo(() => mnemonicToSeedSync(mnemonic), [mnemonic])
-  const seedHex = useMemo(() => bytesToHex(seed), [seed])
-  const masterKey = useMemo(() => seed && HDKey.fromMasterSeed(seed), [seed])
+  const persona = useMemo(() => generatePersona(value), [value])
 
-  const [subPersonas, setSubPersonas] = useState<Nip06SubPersona[]>(() => {
+  const [subIdentities] = useState<Nip06SubIdentity[]>(() => {
     return Array(16 + 1)
       .fill('')
-      .map((_, index) => {
-        const path = nip06DerivationPath(index)
-        const key = deriveNostrKeyFromPath(masterKey, path)
-        return {
-          displayName: `${value.displayName} #${index}`,
-          path,
-          privateKey: toNostrPrivateKey(key.privateKey),
-          publicKey: toNostrPublicKey(key.publicKey),
-        }
-      })
+      .map((_, index) => generateNip06SubIdentity(persona, index))
   })
 
-  const [mainPersona, otherPersonas] = useMemo(
-    () => [subPersonas[0], subPersonas.slice(1)],
-    [subPersonas],
+  const [mainIdentity, otherIdentities] = useMemo(
+    () => [subIdentities[0], subIdentities.slice(1)],
+    [subIdentities],
   )
 
   return (
@@ -101,39 +68,49 @@ export default function PersonaPageContent({ value }: { value: PersonaData }) {
                 </code>
               </InfoDropdown>
             </div>
-            <input className="flex-1" type="text" value={entropyHex} readOnly />
-            <CopyButton value={entropyHex} />
+            <input
+              className="flex-1"
+              type="text"
+              value={persona.entropyHex}
+              readOnly
+            />
+            <CopyButton value={persona.entropyHex} />
           </label>
 
           <label className="input input-bordered input-md flex items-center gap-1">
             <div className="text-primary min-w-32">Mnemonic</div>
-            <input className="flex-1" type="text" value={mnemonic} readOnly />
-            <CopyButton value={mnemonic} />
+            <input
+              className="flex-1"
+              type="text"
+              value={persona.mnemonic}
+              readOnly
+            />
+            <CopyButton value={persona.mnemonic} />
           </label>
         </div>
       </div>
 
       <div className="my-4">
-        <SubPersonaCard
-          value={mainPersona}
+        <SubIdentityCard
+          value={mainIdentity}
           className="border-2 border-primary"
         />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-        {otherPersonas.map((it, index) => (
-          <SubPersonaCard value={it} key={index} />
+        {otherIdentities.map((it, index) => (
+          <SubIdentityCard value={it} key={index} />
         ))}
       </div>
     </>
   )
 }
 
-function SubPersonaCard({
+function SubIdentityCard({
   value,
   className,
 }: {
-  value: Nip06SubPersona
+  value: Nip06SubIdentity
   className?: string
 }) {
   return (

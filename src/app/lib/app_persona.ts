@@ -13,7 +13,7 @@ import {
 import { sha256 } from '@noble/hashes/sha256'
 import { entropyToMnemonic, mnemonicToSeedSync } from '@scure/bip39'
 
-type Persona = {
+export type Persona = {
   persona: PersonaData
   idHash: Uint8Array
   entropy: Uint8Array
@@ -24,7 +24,7 @@ type Persona = {
   masterKey: HDKey
 }
 
-type Nip06SubIdentity = {
+export type Nip06SubIdentity = {
   displayName: PersonaData['displayName']
   path: string
   privateKey: NostrPrivateKey
