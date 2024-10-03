@@ -5,26 +5,26 @@ import { Avatar, AvatarProps, Card, Stack } from 'react-daisyui'
 import PERSONAS from '../personas.json'
 import ROUTES from '../lib/routes'
 
-export type Persona = {
+export type PersonaData = {
   id: string
   displayName: string
   shortDescription: string
   description: string
 }
 
-interface PersonaProps {
-  persona: Persona
+interface PersonaViewProps {
+  persona: PersonaData
   className?: string
   bgColor?: AvatarProps['color']
   avatarBorderColor?: AvatarProps['borderColor']
 }
 
-function Persona({
+function PersonaView({
   className,
   bgColor = 'neutral',
   avatarBorderColor = 'neutral',
   persona: { id, displayName, shortDescription },
-}: PersonaProps) {
+}: PersonaViewProps) {
   return (
     <>
       <Stack>
@@ -72,13 +72,13 @@ export default function Page() {
       <div className="text-lg text-slate-500 break-all"></div>
 
       <div className="my-12 flex flex-wrap justify-center gap-8">
-        <Persona
+        <PersonaView
           className="w-80 min-h-64"
           persona={PERSONAS.alice}
           bgColor="primary"
           avatarBorderColor="secondary"
         />
-        <Persona
+        <PersonaView
           className="w-80 min-h-64"
           persona={PERSONAS.bob}
           bgColor="primary"
@@ -87,22 +87,22 @@ export default function Page() {
       </div>
 
       <div className="my-4 flex flex-wrap justify-center gap-2">
-        <Persona
+        <PersonaView
           className="w-80 min-h-64"
           persona={PERSONAS.charlie}
           avatarBorderColor="neutral"
         />
-        <Persona
+        <PersonaView
           className="w-80 min-h-64"
           persona={PERSONAS.dave}
           avatarBorderColor="neutral"
         />
-        <Persona
+        <PersonaView
           className="w-80 min-h-64"
           persona={PERSONAS.eve}
           avatarBorderColor="warning"
         />
-        <Persona
+        <PersonaView
           className="w-80 min-h-64"
           persona={PERSONAS.frank}
           avatarBorderColor="neutral"

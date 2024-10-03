@@ -8,8 +8,6 @@ import {
   Card,
   Dropdown,
   DropdownProps,
-  Input,
-  Join,
   Link,
 } from 'react-daisyui'
 import { HDKey } from '@scure/bip32'
@@ -25,18 +23,18 @@ import {
   toNostrPrivateKey,
   toNostrPublicKey,
 } from '../../lib/app_nostr'
-import { Persona } from '../page'
+import { PersonaData } from '../page'
 import { DocumentDuplicateIcon, LinkIcon } from '@heroicons/react/24/outline'
 import { ButtonProps } from 'react-daisyui/dist/Button'
 
 type Nip06SubPersona = {
-  displayName: Persona['displayName']
+  displayName: PersonaData['displayName']
   path: string
   privateKey: NostrPrivateKey
   publicKey: NostrPublicKey
 }
 
-export default function PersonaPageContent({ value }: { value: Persona }) {
+export default function PersonaPageContent({ value }: { value: PersonaData }) {
   const idHash = useMemo(() => sha256(value.id), [value.id])
   const entropy = useMemo(() => idHash.slice(0, 16), [idHash])
   const entropyHex = useMemo(() => bytesToHex(entropy), [entropy])
@@ -47,21 +45,6 @@ export default function PersonaPageContent({ value }: { value: Persona }) {
   const seed = useMemo(() => mnemonicToSeedSync(mnemonic), [mnemonic])
   const seedHex = useMemo(() => bytesToHex(seed), [seed])
   const masterKey = useMemo(() => seed && HDKey.fromMasterSeed(seed), [seed])
-
-  const nostrKey0Path = useMemo(() => nip06DerivationPath(0), [])
-
-  const nostrKey0 = useMemo(
-    () => deriveNostrKeyFromPath(masterKey, nostrKey0Path),
-    [masterKey, nostrKey0Path],
-  )
-  const nostrKey0PrivateKey = useMemo(
-    () => toNostrPrivateKey(nostrKey0.privateKey),
-    [nostrKey0],
-  )
-  const nostrKey0PublicKey = useMemo(
-    () => toNostrPublicKey(nostrKey0.publicKey),
-    [nostrKey0],
-  )
 
   const [subPersonas, setSubPersonas] = useState<Nip06SubPersona[]>(() => {
     return Array(16 + 1)
