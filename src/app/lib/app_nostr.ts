@@ -64,7 +64,21 @@ export type NostrPrivateKey = {
 const PUBKEY_LIMIT = NOSTR_PUBLIC_KEY_PREFIX.length + 7 + 128
 const PRVKEY_LIMIT = NOSTR_PRIVATE_KEY_PREFIX.length + 7 + 128
 
-export const toNostrPublicKey = (publicKey: Uint8Array): NostrPublicKey => {
+export const toNostrPublicKey = (publicKeyArg: Uint8Array): NostrPublicKey => {
+  let publicKey = publicKeyArg
+
+  // turn to xonly public key if argument has prefix of 2 or 3
+  if (
+    publicKeyArg.length === 33 &&
+    (publicKey[0] === 2 || publicKey[0] === 3)
+  ) {
+    publicKey = publicKeyArg.subarray(1)
+  }
+
+  if (publicKey.length !== 32) {
+    throw new Error('Public key must have 32 bytes')
+  }
+
   const words = bech32.toWords(publicKey)
   const encoded = bech32.encode(
     NOSTR_PUBLIC_KEY_PREFIX,
@@ -79,6 +93,9 @@ export const toNostrPublicKey = (publicKey: Uint8Array): NostrPublicKey => {
 }
 
 export const toNostrPrivateKey = (privateKey: Uint8Array): NostrPrivateKey => {
+  if (privateKey.length !== 32) {
+    throw new Error('Private key must have 32 bytes')
+  }
   const words = bech32.toWords(privateKey)
   const encoded = bech32.encode(
     NOSTR_PRIVATE_KEY_PREFIX,
