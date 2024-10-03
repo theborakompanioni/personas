@@ -48,6 +48,20 @@ describe('app_nostr', () => {
         'c15d739894c81a2fcfd3a2df85a0d2c0dbc47a280d092799f144d73d7ae78add',
       )
     })
+
+    it('should map private key to nsec (alice #0)', () => {
+      const privateKeyBytes = hexToBytes(
+        '7eaab2f5e9359badb538722e23e6e65bb0c8265a707d317ec4b132ccd23aeb72',
+      )
+
+      const privateKey = toNostrPrivateKey(privateKeyBytes)
+      expect(privateKey.nip19).toEqual(
+        'nsec1064t9a0fxkd6mdfcwghz8ehxtwcvsfj6wp7nzlkykyeve536adeqjksgqj',
+      )
+      expect(privateKey.hex).toEqual(
+        '7eaab2f5e9359badb538722e23e6e65bb0c8265a707d317ec4b132ccd23aeb72',
+      )
+    })
   })
 
   describe('toNostrPublicKey', () => {
@@ -90,6 +104,20 @@ describe('app_nostr', () => {
       )
       expect(publicKey.hex).toEqual(
         'd41b22899549e1f3d335a31002cfd382174006e166d3e658e3a5eecdb6463573',
+      )
+    })
+
+    it('should map public key to npub (alice #0)', () => {
+      const publicKeyBytes = hexToBytes(
+        'f319269a8757e84e9b6dad9325cb74933f64e9497c4c3a8f7757361e78edf564',
+      )
+
+      const publicKey = toNostrPublicKey(publicKeyBytes)
+      expect(publicKey.nip19).toEqual(
+        'npub17vvjdx582l5yaxmd4kfjtjm5jvlkf62f03xr4rmh2umpu78d74jqxhkuj6',
+      )
+      expect(publicKey.hex).toEqual(
+        'f319269a8757e84e9b6dad9325cb74933f64e9497c4c3a8f7757361e78edf564',
       )
     })
   })
