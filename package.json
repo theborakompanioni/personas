@@ -8,7 +8,8 @@
     "start": "next start",
     "serve": "npx serve out",
     "lint": "next lint",
-    "format": "prettier --write --no-error-on-unmatched-pattern 'src/**/*.{ts,tsx,json,css,md}'"
+    "format": "prettier --write --no-error-on-unmatched-pattern 'src/**/*.{ts,tsx,json,css,md}'",
+    "test": "jest"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -24,15 +25,23 @@
     "react-text-transition": "^3.1.0"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/jest": "^29.5.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8",
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.10",
+    "ts-jest": "^29.2.5",
     "typescript": "^5"
   }
 }
