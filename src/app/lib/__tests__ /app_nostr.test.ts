@@ -1,3 +1,6 @@
+/**
+ * @jest-environment node
+ */
 import { hexToBytes } from '@noble/hashes/utils'
 import { toNostrPrivateKey, toNostrPublicKey } from '../app_nostr'
 
