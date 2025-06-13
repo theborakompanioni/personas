@@ -59,7 +59,7 @@ export default function PersonaPageContent({ value }: { value: PersonaData }) {
       <div className="flex flex-col my-4 bg-neutral rounded-lg p-8 text-neutral-content break-all">
         <div className="flex flex-col gap-2">
           <label className="input input-bordered input-md flex items-center gap-1">
-            <div className="text-primary min-w-32">
+            <div className="text-primary min-w-20">
               <span className="pe-1">Entropy</span>
 
               <InfoDropdown>
@@ -78,7 +78,7 @@ export default function PersonaPageContent({ value }: { value: PersonaData }) {
           </label>
 
           <label className="input input-bordered input-md flex items-center gap-1">
-            <div className="text-primary min-w-32">Mnemonic</div>
+            <div className="text-primary min-w-20">Mnemonic</div>
             <input
               className="flex-1"
               type="text"
@@ -121,12 +121,7 @@ function SubIdentityCard({
         <div className="mb-2">
           <div className="text-lg">{value.displayName}</div>
           <div className="flex items-center">
-            <Breadcrumbs>
-              {value.path.split('/').map((it, index) => (
-                <Breadcrumbs.Item key={index}>{it}</Breadcrumbs.Item>
-              ))}
-            </Breadcrumbs>
-            <InfoDropdown className="ms-2">
+            <InfoDropdown className="me-2">
               <div>
                 Derivation path (
                 <Link
@@ -148,6 +143,11 @@ function SubIdentityCard({
                 />
               </label>
             </InfoDropdown>
+            <Breadcrumbs>
+              {value.path.split('/').map((it, index) => (
+                <Breadcrumbs.Item key={index}>{it}</Breadcrumbs.Item>
+              ))}
+            </Breadcrumbs>
           </div>
         </div>
         <div className="flex flex-col gap-2">
