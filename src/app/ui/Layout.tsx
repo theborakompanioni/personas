@@ -7,6 +7,7 @@ import { Navbar } from './Navbar'
 import { Footer } from './Footer'
 import { useSettings } from '../context/SettingsContext'
 import { DEFAULT_THEME } from '../app_settings'
+import { Toaster } from 'sonner'
 
 type LayoutProps = {
   title: ReactNode
@@ -37,6 +38,8 @@ export default function Layout({
           <div className="px-4 pb-32">{children}</div>
         </div>
         <Footer />
+
+        <Toaster theme="dark" closeButton />
       </Drawer>
     </Theme>
   )

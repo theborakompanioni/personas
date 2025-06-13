@@ -18,6 +18,7 @@ import {
   generatePersona,
   Nip06SubIdentity,
 } from '../../lib/app_persona'
+import { toast } from 'sonner'
 
 export default function PersonaPageContent({ value }: { value: PersonaData }) {
   const persona = useMemo(() => generatePersona(value), [value])
@@ -74,7 +75,7 @@ export default function PersonaPageContent({ value }: { value: PersonaData }) {
               value={persona.entropyHex}
               readOnly
             />
-            <CopyButton value={persona.entropyHex} />
+            <CopyButtonWithNotification value={persona.entropyHex} displayType="entropy" />
           </label>
 
           <label className="input input-bordered input-md flex items-center gap-1">
@@ -85,7 +86,7 @@ export default function PersonaPageContent({ value }: { value: PersonaData }) {
               value={persona.mnemonic}
               readOnly
             />
-            <CopyButton value={persona.mnemonic} />
+            <CopyButtonWithNotification value={persona.mnemonic} displayType="mnemonic" />
           </label>
         </div>
       </div>
@@ -160,7 +161,7 @@ function SubIdentityCard({
                 value={value.privateKey.nip19}
                 readOnly
               />
-              <CopyButton value={value.privateKey.nip19} />
+              <CopyButtonWithNotification value={value.privateKey.nip19} displayType="private key (nsec)" />
             </label>
           </div>
           <div>
@@ -172,7 +173,7 @@ function SubIdentityCard({
                 value={value.privateKey.hex}
                 readOnly
               />
-              <CopyButton value={value.privateKey.hex} />
+              <CopyButtonWithNotification value={value.privateKey.hex} displayType="private key (hex)" />
             </label>
           </div>
           <div>
@@ -184,7 +185,7 @@ function SubIdentityCard({
                 value={value.publicKey.nip19}
                 readOnly
               />
-              <CopyButton value={value.publicKey.nip19} />
+              <CopyButtonWithNotification value={value.publicKey.nip19} displayType="public key (npub)" />
             </label>
           </div>
           <div>
@@ -196,7 +197,7 @@ function SubIdentityCard({
                 value={value.publicKey.hex}
                 readOnly
               />
-              <CopyButton value={value.publicKey.hex} />
+              <CopyButtonWithNotification value={value.publicKey.hex} displayType="public key (hex)" />
             </label>
           </div>
           <div className="mt-2">
@@ -214,17 +215,48 @@ function SubIdentityCard({
   )
 }
 
+type CopyButtonWithNotification = CopyButtonProps & {
+  displayType?: string
+}
+
+function CopyButtonWithNotification({ displayType, ...props }: CopyButtonWithNotification) {
+  return (
+    <CopyButton
+      {... props}
+      onSuccess={() => {
+        toast.success(displayType ? `Copied ${displayType}!` : "Copied!")
+        props.onSuccess && props.onSuccess()
+      }}
+      onError={(e) => {
+        toast.error("Error while copying value to clipboard.")
+        props.onError && props.onError(e)
+      }}
+    />
+  )
+}
+
+interface CopyButtonProps {
+  value: string
+  className?: string
+  size?: ButtonProps['size']
+  onSuccess?: () => void
+  onError?: (e: any) => void
+}
+
 function CopyButton({
   value,
   className,
   size = 'xs',
-}: {
-  value: string
-  className?: string
-  size?: ButtonProps['size']
-}) {
+  onSuccess,
+  onError,
+}: CopyButtonProps) {
   const copy = async () => {
-    await navigator.clipboard.writeText(value)
+    try {
+      await navigator.clipboard.writeText(value)
+      onSuccess && onSuccess()
+    } catch (e: any) {
+      onError && onError(e)
+    }
   }
 
   return (
