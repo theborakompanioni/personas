@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { Url } from 'next/dist/shared/lib/router/router'
 import Image from 'next/image'
 import ROUTES from '../lib/routes'
+import { basePath } from '../../../next.config';
 
 type NavbarProps = {
   title: ReactNode
@@ -55,7 +56,7 @@ export function Navbar({ title, toggleSidebar }: NavbarProps) {
                 <>
                   <div className="mr-2">
                     <Image
-                      src="./logo192.png"
+                      src={`${basePath}/logo192.png`}
                       alt="logo"
                       width={32}
                       height={32}
@@ -73,7 +74,7 @@ export function Navbar({ title, toggleSidebar }: NavbarProps) {
               <>
                 <div className="mr-2">
                   <Image
-                    src="./logo192.png"
+                    src={`${basePath}/logo192.png`}
                     alt="logo"
                     width={32}
                     height={32}

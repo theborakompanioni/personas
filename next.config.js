@@ -10,6 +10,8 @@ const nextConfig = {
 
     // Optional: Prevent automatic `/me` -> `/me/`, instead preserve `href`
     // skipTrailingSlashRedirect: true,
+
+    basePath: ''
 }
 
 module.exports = nextConfig
