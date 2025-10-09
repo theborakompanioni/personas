@@ -115,7 +115,7 @@ export default function Page() {
 
   return (
     <main className="flex flex-col gap-2">
-      <h2 className="text-3xl font-bold tracking-tighter">Identitiy</h2>
+      <h2 className="text-3xl font-bold tracking-tighter">Identity</h2>
 
       <div className="flex flex-col gap-4 mb-4">
         <IdentityForm
